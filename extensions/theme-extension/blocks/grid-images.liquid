@@ -1,0 +1,964 @@
+{%- style -%}
+  #shopify-block-{{- block.id -}} {
+    padding-top: {{- block.settings.offset_top_mobile -}}px;
+    padding-bottom: {{- block.settings.offset_bottom_mobile -}}px;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-block-{{- block.id -}} {
+      padding-top: {{- block.settings.offset_top_desktop -}}px;
+      padding-bottom: {{- block.settings.offset_bottom_desktop -}}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- assign big_image_position 	= block.settings.big_image_position -%}
+{%- assign container 			= block.settings.container_width -%}
+
+{% if container == 'inherit' %}
+  {% assign container_width = settings.page_width %}
+{% else %}
+  {% assign container_width = container %}
+{% endif %}
+
+<section class="grid-images" style="--container-width: {{- container_width -}};">
+  {%- assign label_first         	        = block.settings.label_first -%}
+  {%- assign label_second         	        = block.settings.label_second -%}
+  {%- assign heading_first         	        = block.settings.heading_first -%}
+  {%- assign heading_second         	    = block.settings.heading_second -%}
+  {%- assign image_desktop_first 	        = block.settings.image_desktop_first -%}
+  {%- assign image_mobile_first  	        = block.settings.image_mobile_first | default: image_desktop_first -%}
+  {%- assign image_desktop_second 	        = block.settings.image_desktop_second -%}
+  {%- assign image_mobile_second  	        = block.settings.image_mobile_second | default: image_desktop_second -%}
+  {%- assign url_first           	        = block.settings.url_first -%}
+  {%- assign url_second           	        = block.settings.url_second -%}
+  {%- assign overlay_color_first 	        = block.settings.overlay_color_first -%}
+  {%- assign overlay_color_second 	        = block.settings.overlay_color_second -%}
+  {%- assign text_color_first    	        = block.settings.text_color_first -%}
+  {%- assign text_color_second    	        = block.settings.text_color_second -%}
+  {%- assign overlay_opacity_first          = block.settings.overlay_first -%}
+  {%- assign overlay_opacity_second         = block.settings.overlay_second -%}
+
+  {%- capture styles_first -%}
+    --overlay-color: {{- overlay_color_first -}};
+    --overlay-opacity: {{- overlay_opacity_first -}}%;
+    --text-color: {{- text_color_first -}};
+    --text-background: {{ block.settings.text_background_first }};
+  {%- endcapture -%}
+
+  {%- capture styles_second -%}
+      --overlay-color: {{- overlay_color_second -}};
+      --overlay-opacity: {{- overlay_opacity_second -}}%;
+      --text-color: {{- text_color_second -}};
+      --text-background: {{ block.settings.text_background_second }};
+  {%- endcapture -%}
+
+  <link rel="stylesheet" href="{{ 'grid-images.css' | asset_url }}">
+
+  {%- capture grid_images_info_first -%}
+    {%- if label_first != blank or heading_first != blank -%}
+      <div class="grid-images__info">
+        {%- if label_first != blank -%}
+          <p class="grid-images__label">
+            {{- label_first -}}
+          </p>
+        {%- endif -%}
+
+        {%- if heading_first != blank -%}
+          <h2 class="h2 grid-images__heading">
+            {{- heading_first -}}
+          </h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture grid_images_info_second -%}
+      {%- if label_second != blank or heading_second != blank -%}
+          <div class="grid-images__info">
+              {%- if label_first != blank -%}
+                  <p class="grid-images__label">
+                      {{- label_second -}}
+                  </p>
+              {%- endif -%}
+
+              {%- if heading_second != blank -%}
+                  <h2 class="h2 grid-images__heading">
+                      {{- heading_second -}}
+                  </h2>
+              {%- endif -%}
+          </div>
+      {%- endif -%}
+  {%- endcapture -%}
+
+  {%- if image_desktop_first != blank and image_desktop_second == blank -%}
+    <div
+          class="grid-images__col grid-images__col--full-width"
+          style="{{- styles_first -}}"
+    >
+    {% if url_first != blank %}
+      <a
+        class="grid-images__image-container grid-images__image-container--hover"
+        href="{{- url_first -}}"
+        aria-label="{{- heading_first | escape -}}"
+      >
+    {% else %}
+      <div class="grid-images__image-container">
+    {% endif %}
+      <picture>
+          <source
+                  srcset="{{ image_mobile_first | img_url: '375x' }} 1x, {{ image_mobile_first | img_url: '750x' }} 2x"
+                  media="(max-width: 375px)"
+                  width="375"
+                  height="340"
+          />
+
+          <source
+                  srcset="{{ image_mobile_first | img_url: '480x' }} 1x, {{ image_mobile_first | img_url: '960x' }} 2x"
+                  media="(max-width: 480px)"
+                  width="480"
+                  height="435"
+          />
+
+          <source
+                  srcset="{{ image_mobile_first | img_url: '575x' }} 1x, {{ image_mobile_first | img_url: '1150x' }} 2x"
+                  media="(max-width: 575px)"
+                  width="575"
+                  height="522"
+          />
+
+          <source
+                  srcset="{{ image_mobile_first | img_url: '767x' }} 1x, {{ image_mobile_first | img_url: '1534x' }} 2x"
+                  media="(max-width: 767px)"
+                  width="767"
+                  height="696"
+          />
+
+          <source
+                  srcset="{{ image_desktop_first | img_url: '991x' }} 1x, {{ image_desktop_first | img_url: '1982x' }} 2x"
+                  media="(max-width: 991px)"
+                  width="991"
+                  height="330"
+          />
+
+          <img
+                  class="grid-images__image"
+                  srcset="{{ image_desktop_first | img_url: '1920x' }} 1x, {{ image_desktop_first | img_url: '3840x' }} 2x"
+                  src="{{- image_desktop_first | img_url: "10x" -}}"
+                  alt="{{- image_desktop_first.alt | escape -}}"
+                  width="1920"
+                  height="640"
+                  loading="eager"
+          />
+      </picture>
+
+      {{- grid_images_info_first -}}
+    {% if url_first != blank %}
+      </a>
+    {% else %}
+      </div>
+    {% endif %}
+
+    </div>
+  {%- elsif image_desktop_first == blank and image_desktop_second != blank -%}
+      <div
+              class="grid-images__col grid-images__col--full-width"
+              style="{{- styles_second -}}"
+      >
+
+      {% if url_second != blank %}
+        <a
+          class="grid-images__image-container grid-images__image-container--hover"
+          href="{{- url_second -}}"
+          aria-label="{{- heading_second | escape -}}"
+        >
+      {% else %}
+        <div class="grid-images__image-container">
+      {% endif %}
+          <picture>
+              <source
+                      srcset="{{ image_mobile_second | img_url: '375x' }} 1x, {{ image_mobile_second | img_url: '750x' }} 2x"
+                      media="(max-width: 375px)"
+                      width="375"
+                      height="340"
+              />
+
+              <source
+                      srcset="{{ image_mobile_second | img_url: '480x' }} 1x, {{ image_mobile_second | img_url: '960x' }} 2x"
+                      media="(max-width: 480px)"
+                      width="480"
+                      height="435"
+              />
+
+              <source
+                      srcset="{{ image_mobile_second | img_url: '575x' }} 1x, {{ image_mobile_second | img_url: '1150x' }} 2x"
+                      media="(max-width: 575px)"
+                      width="575"
+                      height="522"
+              />
+
+              <source
+                      srcset="{{ image_mobile_second | img_url: '767x' }} 1x, {{ image_mobile_second | img_url: '1534x' }} 2x"
+                      media="(max-width: 767px)"
+                      width="767"
+                      height="696"
+              />
+
+              <source
+                      srcset="{{ image_desktop_second | img_url: '991x' }} 1x, {{ image_desktop_second | img_url: '1982x' }} 2x"
+                      media="(max-width: 991px)"
+                      width="991"
+                      height="330"
+              />
+
+              <img
+                      class="grid-images__image"
+                      srcset="{{ image_desktop_second | img_url: '1920x' }} 1x, {{ image_desktop_second | img_url: '3840x' }} 2x"
+                      src="{{- image_desktop_second | img_url: "10x" -}}"
+                      alt="{{- image_desktop_second.alt | escape -}}"
+                      width="1920"
+                      height="640"
+                      loading="eager"
+              />
+          </picture>
+
+          {{- grid_images_info_second -}}
+      {% if url_second != blank %}
+        </a>
+      {% else %}
+        </div>
+      {% endif %}
+      </div>
+
+  {%- else -%}
+    {%- case big_image_position -%}
+      {%- when "first" -%}
+        {%- if image_desktop_first != blank and image_desktop_second != blank -%}
+          <div
+            class="grid-images__col grid-images__col--big"
+            style="{{- styles_first -}}"
+          >
+          {% if url_first != blank %}
+            <a
+              class="grid-images__image-container grid-images__image-container--hover"
+              href="{{- url_first -}}"
+              aria-label="{{- heading_first | escape -}}"
+            >
+          {% else %}
+            <div class="grid-images__image-container">
+          {% endif %}
+              <picture>
+                <source
+                      srcset="{{ image_mobile_first | img_url: '375x' }} 1x, {{ image_mobile_first | img_url: '750x' }} 2x"
+                      media="(max-width: 375px)"
+                      width="375"
+                      height="340"
+                />
+
+                <source
+                      srcset="{{ image_mobile_first | img_url: '480x' }} 1x, {{ image_mobile_first | img_url: '960x' }} 2x"
+                      media="(max-width: 480px)"
+                      width="480"
+                      height="435"
+                />
+
+                <source
+                      srcset="{{ image_mobile_first | img_url: '575x' }} 1x, {{ image_mobile_first | img_url: '1150x' }} 2x"
+                      media="(max-width: 575px)"
+                      width="575"
+                      height="522"
+                />
+
+                <source
+                      srcset="{{ image_mobile_first | img_url: '767x' }} 1x, {{ image_mobile_first | img_url: '1534x' }} 2x"
+                      media="(max-width: 767px)"
+                      width="767"
+                      height="696"
+                />
+
+                <source
+                      srcset="{{ image_desktop_first | img_url: '619x' }} 1x, {{ image_desktop_first | img_url: '1238x' }} 2x"
+                      media="(max-width: 991px)"
+                      width="619"
+                      height="330"
+                />
+
+                <img
+                      class="grid-images__image"
+                      srcset="{{ image_desktop_first | img_url: "1200x" }} 1x, {{ image_desktop_first | img_url: "2400x" }} 2x"
+                      src="{{- image_desktop_first | img_url: "10x" -}}"
+                      alt="{{- image_desktop_first.alt | escape -}}"
+                      width="1200"
+                      height="640"
+                      loading="eager"
+                />
+              </picture>
+
+            {{- grid_images_info_first -}}
+          {% if url_first != blank %}
+            </a>
+          {% else %}
+            </div>
+          {% endif %}
+          </div>
+
+          <div
+            class="grid-images__col"
+            style="{{- styles_second -}}"
+          >
+        {% if url_second != blank %}
+          <a
+            class="grid-images__image-container grid-images__image-container--hover"
+            href="{{- url_first -}}"
+            aria-label="{{- heading_first | escape -}}"
+          >
+        {% else %}
+          <div class="grid-images__image-container">
+        {% endif %}
+            <picture>
+              <source
+                   srcset="{{ image_mobile_second | img_url: '375x' }} 1x, {{ image_mobile_second | img_url: '750x' }} 2x"
+                   media="(max-width: 375px)"
+                   width="375"
+                   height="340"
+              />
+
+              <source
+                   srcset="{{ image_mobile_second | img_url: '480x' }} 1x, {{ image_mobile_second | img_url: '960x' }} 2x"
+                   media="(max-width: 480px)"
+                   width="480"
+                   height="435"
+              />
+
+              <source
+                   srcset="{{ image_mobile_second | img_url: '575x' }} 1x, {{ image_mobile_second | img_url: '1150x' }} 2x"
+                   media="(max-width: 575px)"
+                   width="575"
+                   height="522"
+              />
+
+              <source
+                   srcset="{{ image_mobile_second | img_url: '767x' }} 1x, {{ image_mobile_second | img_url: '1534x' }} 2x"
+                   media="(max-width: 767px)"
+                   width="767"
+                   height="696"
+              />
+
+              <source
+                   srcset="{{ image_desktop_second | img_url: '372x' }} 1x, {{ image_desktop_second | img_url: '744x' }} 2x"
+                   media="(max-width: 991px)"
+                   width="372"
+                   height="330"
+              />
+
+              <img
+                    class="grid-images__image"
+                    srcset="{{ image_desktop_second | img_url: "720x" }} 1x, {{ image_desktop_second | img_url: "1440x" }} 2x"
+                    src="{{- image_desktop_second | img_url: "10x" -}}"
+                    alt="{{- image_desktop_second.alt | escape -}}"
+                    width="720"
+                    height="640"
+                    loading="eager"
+              />
+            </picture>
+
+            {{- grid_images_info_second -}}
+        {% if url_second != blank %}
+            </a>
+        {% else %}
+            </div>
+        {% endif %}
+        </div>
+        {%- else -%}
+          {% assign odd =  forloop.index | modulo: 2 %}
+
+          <div
+                  class="grid-images__col grid-images__col--big"
+                  style="{{- styles_first -}}"
+          >
+            <div class="grid-images__image-container">
+              {%- if odd  == 1 -%}
+                {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- else -%}
+                {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- endif -%}
+
+              {{- grid_images_info_first -}}
+            </div>
+          </div>
+
+          <div
+                 class="grid-images__col"
+                 style="{{- styles_second -}}"
+          >
+            <div class="grid-images__image-container">
+                {%- if odd  == 1 -%}
+                    {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
+                {%- else -%}
+                    {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
+                {%- endif -%}
+
+                {{- grid_images_info_second -}}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- when "second" -%}
+        {%- if image_desktop_first != blank and image_desktop_second != blank -%}
+          <div class="grid-images__col"
+            style="{{- styles_first -}}"
+          >
+        {% if url_first != blank %}
+          <a
+            class="grid-images__image-container grid-images__image-container--hover"
+            href="{{- url_first -}}"
+            aria-label="{{- heading_first | escape -}}"
+          >
+        {% else %}
+          <div class="grid-images__image-container">
+        {% endif %}
+              <picture>
+                <source
+                        srcset="{{ image_mobile_first | img_url: '375x' }} 1x, {{ image_mobile_first | img_url: '750x' }} 2x"
+                        media="(max-width: 375px)"
+                        width="375"
+                        height="340"
+                />
+
+                <source
+                        srcset="{{ image_mobile_first | img_url: '480x' }} 1x, {{ image_mobile_first | img_url: '960x' }} 2x"
+                        media="(max-width: 480px)"
+                        width="480"
+                        height="435"
+                />
+
+                <source
+                        srcset="{{ image_mobile_first | img_url: '575x' }} 1x, {{ image_mobile_first | img_url: '1150x' }} 2x"
+                        media="(max-width: 575px)"
+                        width="575"
+                        height="522"
+                />
+
+                <source
+                        srcset="{{ image_mobile_first | img_url: '767x' }} 1x, {{ image_mobile_first | img_url: '1534x' }} 2x"
+                        media="(max-width: 767px)"
+                        width="767"
+                        height="696"
+                />
+
+                <source
+                        srcset="{{ image_desktop_first | img_url: '619x' }} 1x, {{ image_desktop_first | img_url: '1238x' }} 2x"
+                        media="(max-width: 991px)"
+                        width="619"
+                        height="330"
+                />
+
+                <img
+                        class="grid-images__image"
+                        srcset="{{ image_desktop_first | img_url: "1200x" }} 1x, {{ image_desktop_first | img_url: "2400x" }} 2x"
+                        src="{{- image_desktop_first | img_url: "10x" -}}"
+                        alt="{{- image_desktop_first.alt | escape -}}"
+                        width="1200"
+                        height="640"
+                        loading="eager"
+                />
+              </picture>
+
+              {{- grid_images_info_first -}}
+        {% if url_first != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="grid-images__col grid-images__col--big"
+           style="{{- styles_second -}}"
+      >
+      {% if url_second != blank %}
+        <a
+          class="grid-images__image-container grid-images__image-container--hover"
+          href="{{- url_second -}}"
+          aria-label="{{- heading_second | escape -}}"
+        >
+      {% else %}
+        <div class="grid-images__image-container">
+      {% endif %}
+           <picture>
+               <source
+                       srcset="{{ image_mobile_second | img_url: '375x' }} 1x, {{ image_mobile_second | img_url: '750x' }} 2x"
+                       media="(max-width: 375px)"
+                       width="375"
+                       height="340"
+               />
+
+               <source
+                       srcset="{{ image_mobile_second | img_url: '480x' }} 1x, {{ image_mobile_second | img_url: '960x' }} 2x"
+                       media="(max-width: 480px)"
+                       width="480"
+                       height="435"
+               />
+
+               <source
+                       srcset="{{ image_mobile_second | img_url: '575x' }} 1x, {{ image_mobile_second | img_url: '1150x' }} 2x"
+                       media="(max-width: 575px)"
+                       width="575"
+                       height="522"
+               />
+
+               <source
+                       srcset="{{ image_mobile_second | img_url: '767x' }} 1x, {{ image_mobile_second | img_url: '1534x' }} 2x"
+                       media="(max-width: 767px)"
+                       width="767"
+                       height="696"
+               />
+
+               <source
+                       srcset="{{ image_desktop_second | img_url: '372x' }} 1x, {{ image_desktop_second | img_url: '744x' }} 2x"
+                       media="(max-width: 991px)"
+                       width="372"
+                       height="330"
+               />
+
+               <img class="grid-images__image"
+                    srcset="{{ image_desktop_second | img_url: "720x" }} 1x, {{ image_desktop_second | img_url: "1440x" }} 2x"
+                    src="{{- image_desktop_second | img_url: "10x" -}}"
+                    alt="{{- image_desktop_second.alt | escape -}}"
+                    width="720"
+                    height="640"
+                    loading="eager"
+               />
+           </picture>
+
+           {{- grid_images_info_second -}}
+      {% if url_second != blank %}
+         </a>
+      {% else %}
+         </div>
+      {% endif %}
+    </div>
+  {%- else -%}
+    {% assign odd =  forloop.index | modulo: 2 %}
+
+        <div class="grid-images__col"
+             style="{{- styles_second -}}"
+        >
+          <div class="grid-images__image-container">
+            {%- if odd  == 1 -%}
+              {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
+            {%- else -%}
+              {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
+            {%- endif -%}
+
+            {{- grid_images_info_second -}}
+          </div>
+        </div>
+
+        <div class="grid-images__col grid-images__col--big"
+            style="{{- styles_second -}}"
+        >
+          <div class="grid-images__image-container">
+              {%- if odd  == 1 -%}
+                  {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- else -%}
+                  {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- endif -%}
+
+              {{- grid_images_info_second -}}
+          </div>
+        </div>
+      {%- endif -%}
+      {%- when "equal" -%}
+        {%- if image_desktop_first != blank and image_desktop_second != blank -%}
+        <div class="grid-images__col grid-images__col--equal"
+          style="{{- styles_first -}}"
+        >
+        {% if url_first != blank %}
+          <a
+            class="grid-images__image-container grid-images__image-container--hover"
+            href="{{- url_first -}}"
+            aria-label="{{- heading_first | escape -}}"
+          >
+        {% else %}
+          <div class="grid-images__image-container">
+        {% endif %}
+            <picture>
+              <source
+                      srcset="{{ image_mobile_first | img_url: '375x' }} 1x, {{ image_mobile_first | img_url: '750x' }} 2x"
+                      media="(max-width: 375px)"
+                      width="375"
+                      height="340"
+              />
+
+              <source
+                      srcset="{{ image_mobile_first | img_url: '480x' }} 1x, {{ image_mobile_first | img_url: '960x' }} 2x"
+                      media="(max-width: 480px)"
+                      width="480"
+                      height="435"
+              />
+
+              <source
+                      srcset="{{ image_mobile_first | img_url: '575x' }} 1x, {{ image_mobile_first | img_url: '1150x' }} 2x"
+                      media="(max-width: 575px)"
+                      width="575"
+                      height="522"
+              />
+
+              <source
+                      srcset="{{ image_mobile_first | img_url: '767x' }} 1x, {{ image_mobile_first | img_url: '1534x' }} 2x"
+                      media="(max-width: 767px)"
+                      width="767"
+                      height="696"
+              />
+
+              <source
+                      srcset="{{ image_desktop_first | img_url: '494x' }} 1x, {{ image_desktop_first | img_url: '988x' }} 2x"
+                      media="(max-width: 991px)"
+                      width="494"
+                      height="330"
+              />
+
+              <img
+                      class="grid-images__image"
+                      srcset="{{ image_desktop_first | img_url: "958x" }} 1x, {{ image_desktop_first | img_url: "1916x" }} 2x"
+                      src="{{- image_desktop_first | img_url: "958x" -}}"
+                      alt="{{- image_desktop_first.alt | escape -}}"
+                      width="958"
+                      height="640"
+                      loading="eager"
+              />
+          </picture>
+
+            {{- grid_images_info_first -}}
+        {% if url_first != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+
+        </div>
+
+        <div class="grid-images__col grid-images__col--equal"
+             style="{{- styles_second -}}"
+        >
+        {% if url_second != blank %}
+          <a
+            class="grid-images__image-container grid-images__image-container--hover"
+            href="{{- url_second -}}"
+            aria-label="{{- heading_second | escape -}}"
+          >
+        {% else %}
+          <div class="grid-images__image-container">
+        {% endif %}
+            <picture>
+                <source
+                        srcset="{{ image_mobile_second | img_url: '375x' }} 1x, {{ image_mobile_second | img_url: '750x' }} 2x"
+                        media="(max-width: 375px)"
+                        width="375"
+                        height="340"
+                />
+
+                <source
+                        srcset="{{ image_mobile_second | img_url: '480x' }} 1x, {{ image_mobile_second | img_url: '960x' }} 2x"
+                        media="(max-width: 480px)"
+                        width="480"
+                        height="435"
+                />
+
+                <source
+                        srcset="{{ image_mobile_second | img_url: '575x' }} 1x, {{ image_mobile_second | img_url: '1150x' }} 2x"
+                        media="(max-width: 575px)"
+                        width="575"
+                        height="522"
+                />
+
+                <source
+                        srcset="{{ image_mobile_second | img_url: '767x' }} 1x, {{ image_mobile_second | img_url: '1534x' }} 2x"
+                        media="(max-width: 767px)"
+                        width="767"
+                        height="696"
+                />
+
+                <source
+                        srcset="{{ image_desktop_second | img_url: '494x' }} 1x, {{ image_desktop_second | img_url: '988x' }} 2x"
+                        media="(max-width: 991px)"
+                        width="494"
+                        height="330"
+                />
+
+                <img
+                        class="grid-images__image"
+                        srcset="{{ image_desktop_second | img_url: "958x" }} 1x, {{ image_desktop_second | img_url: "1916x" }} 2x"
+                        src="{{- image_desktop_second | img_url: "958x" -}}"
+                        alt="{{- image_desktop_second.alt | escape -}}"
+                        width="958"
+                        height="640"
+                        loading="eager"
+                />
+            </picture>
+
+            {{- grid_images_info_second -}}
+        {% if url_second != blank %}
+          </a>
+        {% else %}
+          </div>
+        {% endif %}
+
+        </div>
+        {%- else -%}
+          {% assign odd =  forloop.index | modulo: 2 %}
+
+          <div class="grid-images__col grid-images__col--equal"
+               style="{{- styles_first -}}"
+          >
+            <div class="grid-images__image-container">
+              {%- if odd  == 1 -%}
+                {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- else -%}
+                {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- endif -%}
+
+              {{- grid_images_info_first -}}
+            </div>
+          </div>
+
+          <div class="grid-images__col grid-images__col--equal"
+            style="{{- styles_second -}}"
+          >
+            <div class="grid-images__image-container">
+              {%- if odd  == 1 -%}
+                  {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- else -%}
+                  {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
+              {%- endif -%}
+
+              {{- grid_images_info_second -}}
+            </div>
+          </div>
+        {%- endif -%}
+    {%- endcase -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+    {
+      "name": "Grid images",
+      "target": "section",
+      "settings": [
+        {
+          "type": "select",
+          "id": "big_image_position",
+          "label": "Grid layout",
+          "options": [
+            {
+              "value": "first",
+              "label": "Big image left"
+            },
+            {
+              "value": "second",
+              "label": "Big image right"
+            },
+            {
+              "value": "equal",
+              "label": "Equal"
+            }
+          ],
+          "default": "first"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "container_width",
+          "label": "Container width",
+          "options": [
+            {
+              "value": "1432px",
+              "label": "Default - 1400px"
+            },
+            {
+              "value": "1952px",
+              "label": "Large - 1920px"
+            },
+            {
+              "value": "100%",
+              "label": "Full width"
+            },
+            {
+              "value": "inherit",
+              "label": "Inherit of general setting"
+            }
+          ],
+          "default": "inherit",
+          "info": "if you select 'Inherit of general setting', then container width will be used from the Theme settings/Layout"
+        },
+        {
+          "type": "range",
+          "id": "offset_top_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop offset top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "offset_bottom_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Desktop offset bottom",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "offset_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile offset top",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "offset_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Mobile offset bottom",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "First block"
+        },
+        {
+          "type": "text",
+          "id": "label_first",
+          "label": "Label",
+          "default": "Label"
+        },
+        {
+          "type": "text",
+          "id": "heading_first",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_desktop_first",
+          "label": "Image desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile_first",
+          "label": "Image mobile"
+        },
+        {
+          "type": "url",
+          "id": "url_first",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "text_color_first",
+          "label": "Text",
+          "default": "#fff"
+        },
+        {
+          "type": "color_background",
+          "id": "text_background_first",
+          "label": "Background",
+          "default": "#22A200"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color_first",
+          "label": "Overlay",
+          "default": "#000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_first",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Overlay opacity",
+          "default": 30
+        },
+        {
+          "type": "header",
+          "content": "Second block"
+        },
+        {
+          "type": "text",
+          "id": "label_second",
+          "label": "Label",
+          "default": "Label"
+        },
+        {
+          "type": "text",
+          "id": "heading_second",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_desktop_second",
+          "label": "Image desktop"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile_second",
+          "label": "Image mobile"
+        },
+        {
+          "type": "url",
+          "id": "url_second",
+          "label": "Link"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "text_color_second",
+          "label": "Text",
+          "default": "#fff"
+        },
+        {
+          "type": "color_background",
+          "id": "text_background_second",
+          "label": "Background",
+          "default": "#22A200"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color_second",
+          "label": "Overlay",
+          "default": "#000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_second",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Overlay opacity",
+          "default": 30
+        }
+      ]
+    }
+{% endschema %}

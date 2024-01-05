@@ -1,0 +1,623 @@
+{%- assign section_background 		    = block.settings.section_background -%}
+{%- assign content_background 		    = block.settings.content_background -%}
+{%- assign text_color 				    = block.settings.text_color -%}
+{%- assign image_border_color           = block.settings.image_border_color -%}
+{%- assign overlay       			    = block.settings.overlay -%}
+{%- assign container 				    = block.settings.container_width -%}
+
+{%- capture banner -%}
+  {%- assign media_type 					= block.settings.media_type -%}
+  {%- assign third_col_media_type 			= block.settings.third_column_media_type -%}
+  {%- assign label 						  	= block.settings.label -%}
+  {%- assign heading						= block.settings.heading -%}
+  {%- assign text 						  	= block.settings.text -%}
+  {%- assign button_text 					= block.settings.button_text -%}
+  {%- assign button_url 					= block.settings.button_url -%}
+  {%- assign button_aria 					= block.settings.button_aria -%}
+  {%- assign image_desktop 				  	= block.settings.image_desktop -%}
+  {%- assign image_mobile 					= block.settings.image_mobile | default: image_desktop -%}
+  {%- assign third_col_image_desktop 	    = block.settings.third_column_image_desktop -%}
+  {%- assign third_col_image_mobile 		= block.settings.third_column_image_mobile | default: third_col_image_desktop -%}
+  {%- assign html_video_desktop 		  	= block.settings.html_video_desktop -%}
+  {%- assign html_video_mobile 		  		= block.settings.html_video_mobile | default: html_video_desktop -%}
+  {%- assign third_col_html_video_desktop 	= block.settings.third_column_html_video_desktop -%}
+  {%- assign third_col_html_video_mobile 	= block.settings.third_column_html_video_mobile | default: third_col_html_video_desktop  -%}
+  {%- assign image_border_width           	= block.settings.image_border_width -%}
+  {%- assign image_border_indent          	= block.settings.image_border_indent -%}
+
+  {% if container == 'inherit' %}
+    {% assign container_width = settings.page_width | append: 'px' %}
+  {% else %}
+    {% assign container_width = container %}
+  {% endif %}
+
+  {%- capture image -%}
+    {%- if image_desktop != blank -%}
+      {%- render
+              'banner-image',
+              image_desktop: image_desktop,
+              image_mobile: image_mobile
+      -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture third_col_image -%}
+    {%- if third_col_image_desktop != blank -%}
+      {%- render
+              'banner-image',
+              image_desktop: third_col_image_desktop,
+              image_mobile: third_col_image_mobile
+      -%}
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture html_video -%}
+    {%- if html_video_desktop != blank -%}
+      <video
+              class="banner__media banner__video"
+              loop
+              muted
+              playsinline
+              autoplay
+              aria-hidden="true"
+      >
+        {%- for source in html_video_desktop.sources -%}
+          <source src="{{- source.url -}}" type="{{- source.mime_type -}}">
+        {%- endfor -%}
+      </video>
+
+      <video
+              class="banner__media banner__video banner__video--mobile"
+              loop
+              muted
+              playsinline
+              autoplay
+              aria-hidden="true"
+      >
+        {%- for source in html_video_mobile.sources -%}
+          <source src="{{- source.url -}}" type="{{- source.mime_type -}}">
+        {%- endfor -%}
+      </video>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture third_col_html_video -%}
+    {%- if third_col_html_video_desktop != blank -%}
+      <video
+              class="banner__media banner__video"
+              loop
+              muted
+              playsinline
+              autoplay
+              aria-hidden="true"
+      >
+        {%- for source in third_col_html_video_desktop.sources -%}
+          <source src="{{- source.url -}}" type="{{- source.mime_type -}}">
+        {%- endfor -%}
+      </video>
+
+      <video
+              class="banner__media banner__video banner__video--mobile"
+              loop
+              muted
+              playsinline
+              autoplay
+              aria-hidden="true"
+      >
+        {%- for source in third_col_html_video_mobile.sources -%}
+          <source src="{{- source.url -}}" type="{{- source.mime_type -}}">
+        {%- endfor -%}
+      </video>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture banner_media -%}
+    {%- case media_type -%}
+      {%- when 'image' -%}
+        {{- image -}}
+      {%- when 'html_video' -%}
+        {{- html_video -}}
+    {%- endcase -%}
+  {%- endcapture -%}
+
+  {%- capture three_col_banner_media -%}
+    {%- case third_col_media_type -%}
+      {%- when 'image' -%}
+        {{- third_col_image -}}
+      {%- when 'html_video' -%}
+        {{- third_col_html_video -}}
+    {%- endcase -%}
+  {%- endcapture -%}
+
+  {%- capture banner_content -%}
+    {%- if label != blank or heading != blank or text != blank or button_url != blank -%}
+      <div class="banner__content">
+        {%- if label != blank -%}
+          <p class="banner__label">
+            {{- label -}}
+          </p>
+        {%- endif -%}
+
+        {%- if heading != blank -%}
+          <h2 class="h2 banner__heading">
+            {{- heading -}}
+          </h2>
+        {%- endif -%}
+
+        {%- if text != blank -%}
+          <div class="banner__text rte">
+            {{- text -}}
+          </div>
+        {%- endif -%}
+
+        {%- if button_text != blank and button_url != blank -%}
+          <a
+                  class="button button--secondary banner__button"
+                  href="{{- button_url -}}"
+                  aria-label="{{- button_aria | escape -}}"
+          >
+            {{- button_text -}}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture section_styles -%}
+    --banner-background-color: {{- section_background -}}; {{-  -}}
+    --banner-content-background: {{- content_background -}}; {{-  -}}
+    --banner-text-color: {{- text_color -}}; {{-  -}}
+    --overlay: {{- overlay -}}; {{-  -}}
+    --container-width: {{ container_width }}; {{-  -}}
+  {%- endcapture -%}
+
+  {%- capture banner_wrapper_classes -%}
+    banner__wrapper
+    banner__wrapper--overlayed {{-  -}}
+  {%- endcapture -%}
+
+  {%- capture banner_wrapper_styles -%}
+      --banner-min-height-desktop: {{ block.settings.desktop_image_height }}; {{-  -}}
+      --banner-min-height-mobile: {{ block.settings.mobile_image_height }}; {{-  -}}
+      --banner-image-border-width: {{ image_border_width }}px; {{- -}}
+      --banner-image-border-indent: {{ image_border_indent }}px; {{- -}}
+  {%- endcapture -%}
+
+  {%- capture media_wrapper_classes -%}
+    banner__media-wrapper {{-  -}}
+  {%- endcapture -%}
+
+  {%- capture banner_full_size -%}
+    <div class="{{- banner_wrapper_classes | strip_newlines -}}" style="{{- banner_wrapper_styles | strip_newlines -}}">
+      {%- if banner_media != blank -%}
+        <div class="{{- media_wrapper_classes | strip_newlines -}}">
+          {{- banner_media -}}
+        </div>
+      {%- endif -%}
+
+      {%- if banner_content != blank -%}
+        <div class="banner__inner">
+          {{- banner_content -}}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endcapture -%}
+
+{%- endcapture -%}
+
+<link rel="stylesheet" href="{{ 'banner.css' | asset_url }}">
+
+{%- style -%}
+  #shopify-block-{{- block.id -}} {
+    padding-top: {{- block.settings.offset_top_mobile -}}px;
+    padding-bottom: {{- block.settings.offset_bottom_mobile -}}px;
+  }
+
+  @media screen and (min-width: 768px) {
+    #shopify-block-{{- block.id -}} {
+    padding-top: {{- block.settings.offset_top_desktop -}}px;
+    padding-bottom: {{- block.settings.offset_bottom_desktop -}}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="banner{% if container_width == "100%" %} banner--full-width{% endif %}" style="{{- section_styles | strip_newlines -}}">
+  {%- capture banner_three_cols -%}
+    <div class="banner__col banner__col--media">
+      <div class="{{ media_wrapper_classes | strip_newlines }}">
+        {{- banner_media -}}
+      </div>
+    </div>
+
+    <div class="banner__col banner__col--text">
+      {{ banner_content }}
+    </div>
+
+    <div class="banner__col banner__col--media">
+      <div class="{{ media_wrapper_classes | strip_newlines }}">
+        {{- three_col_banner_media -}}
+      </div>
+    </div>
+  {%- endcapture -%}
+
+  <div class="{{- banner_wrapper_classes | strip_newlines -}}" style="{{- banner_wrapper_styles | strip_newlines -}}">
+    {{- banner_three_cols -}}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner",
+  "target": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Section background",
+      "default": "#222222"
+    },
+    {
+      "type": "color_background",
+      "id": "content_background",
+      "label": "Text content background"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color_background",
+      "id": "overlay",
+      "label": "Overlay",
+      "default": "rgba(0,0,0, 0.3)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        {
+          "value": "1432px",
+          "label": "Default - 1400px"
+        },
+        {
+          "value": "1952px",
+          "label": "Large - 1920px"
+        },
+        {
+          "value": "100%",
+          "label": "Full width"
+        },
+        {
+          "value": "inherit",
+          "label": "Inherit of general setting"
+        }
+      ],
+      "default": "1952px",
+      "info": "if you select 'Inherit of general setting', then container width will be used from the Theme settings/Layout"
+    },
+    {
+      "type": "range",
+      "id": "offset_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop offset top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "offset_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop offset bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "offset_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile offset top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "offset_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile offset bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "select",
+      "id": "desktop_image_height",
+      "label": "Desktop banner min height",
+      "options": [
+        {
+          "value": "200px",
+          "label": "200px"
+        },
+        {
+          "value": "250px",
+          "label": "250px"
+        },
+        {
+          "value": "300px",
+          "label": "300px"
+        },
+        {
+          "value": "350px",
+          "label": "350px"
+        },
+        {
+          "value": "400px",
+          "label": "400px"
+        },
+        {
+          "value": "450px",
+          "label": "450px"
+        },
+        {
+          "value": "500px",
+          "label": "500px"
+        },
+        {
+          "value": "550px",
+          "label": "550px"
+        },
+        {
+          "value": "600px",
+          "label": "600px"
+        },
+        {
+          "value": "650px",
+          "label": "650px"
+        },
+        {
+          "value": "700px",
+          "label": "700px"
+        },
+        {
+          "value": "750px",
+          "label": "750px"
+        },
+        {
+          "value": "800px",
+          "label": "800px"
+        }
+      ],
+      "default": "600px"
+    },
+    {
+      "type": "select",
+      "id": "mobile_image_height",
+      "label": "Mobile banner min height",
+      "options": [
+        {
+          "value": "200px",
+          "label": "200px"
+        },
+        {
+          "value": "250px",
+          "label": "250px"
+        },
+        {
+          "value": "300px",
+          "label": "300px"
+        },
+        {
+          "value": "350px",
+          "label": "350px"
+        },
+        {
+          "value": "400px",
+          "label": "400px"
+        },
+        {
+          "value": "450px",
+          "label": "450px"
+        },
+        {
+          "value": "500px",
+          "label": "500px"
+        },
+        {
+          "value": "550px",
+          "label": "550px"
+        },
+        {
+          "value": "600px",
+          "label": "600px"
+        },
+        {
+          "value": "650px",
+          "label": "650px"
+        },
+        {
+          "value": "700px",
+          "label": "700px"
+        },
+        {
+          "value": "750px",
+          "label": "750px"
+        },
+        {
+          "value": "800px",
+          "label": "800px"
+        }
+      ],
+      "default": "350px"
+    },
+    {
+      "type": "range",
+      "id": "image_border_width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "label": "Image border width",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_border_indent",
+      "min": 6,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "label": "Image border indent",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "First column"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media type",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "html_video",
+          "label": "HTML5 video"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Image desktop",
+      "info": "Only work with 'Image' media type"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image mobile",
+      "info": "Only work with 'Image' media type"
+    },
+    {
+      "type": "video",
+      "id": "html_video_desktop",
+      "label": "HTML5 desktop video",
+      "info": "Only work with 'HTML5 video' media type."
+    },
+    {
+      "type": "video",
+      "id": "html_video_mobile",
+      "label": "HTML5 mobile video",
+      "info": "Only work with 'HTML5 video' media type."
+    },
+    {
+      "type": "header",
+      "content": "Second column"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Give customers details about the banner image or content on the banner.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button label",
+      "default": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link",
+      "default": "/"
+    },
+    {
+      "type": "text",
+      "id": "button_aria",
+      "label": "Button aria-label",
+      "info": "Need for good accessibility, e.g. 'Learn more about...'."
+    },
+    {
+      "type": "header",
+      "content": "Third column"
+    },
+    {
+      "type": "select",
+      "id": "third_column_media_type",
+      "label": "Media type",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "html_video",
+          "label": "HTML5 video"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "third_column_image_desktop",
+      "label": "Image desktop",
+      "info": "Only work with 'Image' media type"
+    },
+    {
+      "type": "image_picker",
+      "id": "third_column_image_mobile",
+      "label": "Image mobile",
+      "info": "Only work with 'Image' media type"
+    },
+    {
+      "type": "video",
+      "id": "third_column_html_video_desktop",
+      "label": "HTML5 desktop video",
+      "info": "Only work with 'HTML5 video' media type."
+    },
+    {
+      "type": "video",
+      "id": "third_column_html_video_mobile",
+      "label": "HTML5 mobile video",
+      "info": "Only work with 'HTML5 video' media type."
+    }
+  ]
+}
+{% endschema %}

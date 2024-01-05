@@ -1,0 +1,79 @@
+{%- capture img_focal -%}
+    --img-desktop-pos: {{ image_desktop.presentation.focal_point }}; --img-mob-pos: {{ image_mobile.presentation.focal_point }};
+{%- endcapture -%}
+
+<picture>
+    <source
+            srcset="{{ image_mobile | img_url: '190x' }} 1x, {{ image_mobile | img_url: '380x' }} 2x"
+            media="(max-width: 380px)"
+            width="190"
+            height="570"
+    >
+
+    <source
+            srcset="{{ image_mobile | img_url: '210x' }} 1x, {{ image_mobile | img_url: '420x' }} 2x"
+            media="(max-width: 420px)"
+            width="210"
+            height="500"
+    >
+
+    <source
+            srcset="{{ image_mobile | img_url: '240x' }} 1x, {{ image_mobile | img_url: '480x' }} 2x"
+            media="(max-width: 480px)"
+            width="240"
+            height="768"
+    >
+
+    <source
+            srcset="{{ image_mobile | img_url: '288x' }} 1x, {{ image_mobile | img_url: '576x' }} 2x"
+            media="(max-width: 575px)"
+            width="288"
+            height="690"
+    >
+
+    <source
+            srcset="{{ image_mobile | img_url: '384x' }} 1x, {{ image_mobile | img_url: '768x' }} 2x"
+            media="(max-width: 767px)"
+            width="384"
+            height="345"
+    >
+
+    <source
+            srcset="{{ image_desktop | img_url: '496x' }} 1x, {{ image_desktop | img_url: '992x' }} 2x"
+            media="(max-width: 991px)"
+            width="496"
+            height="595"
+    >
+
+    <source
+            srcset="{{ image_desktop | img_url: '378x' }} 1x, {{ image_desktop | img_url: '756x' }} 2x"
+            media="(max-width: 1199px)"
+            width="378"
+            height="400"
+    >
+
+    <source
+            srcset="{{ image_desktop | img_url: '473x' }} 1x, {{ image_desktop | img_url: '946x' }} 2x"
+            media="(max-width: 1500px)"
+            width="473"
+            height="500"
+    >
+
+    <source
+            srcset="{{ image_desktop | img_url: '530x' }} 1x, {{ image_desktop | img_url: '1060x' }} 2x"
+            media="(max-width: 1680px)"
+            width="530"
+            height="560"
+    >
+
+    <img
+            class="banner__media"
+            src="{{- image_desktop | img_url: "605x" -}}"
+            srcset="{{ image_desktop | img_url: "605x" }} 1x, {{ image_desktop | img_url: "1210x" }} 2x"
+            alt="{{- image_desktop.alt | escape -}}"
+            width="605"
+            height="640"
+            style="{{ img_focal }}"
+            loading="eager"
+    >
+</picture>

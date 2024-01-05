@@ -1,0 +1,14 @@
+{
+  "ratings": {
+    "stars": {
+      "label": "Ratings"
+    },
+    "home": {
+      "recommendationText": "Recommended Product!"
+    }
+  },
+  "button": {
+    "label": "Add to cart",
+    "aria-label": ""
+  }
+}
