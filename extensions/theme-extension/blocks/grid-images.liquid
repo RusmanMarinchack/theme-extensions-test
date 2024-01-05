@@ -277,18 +277,18 @@
                 />
 
                 <source
-                      srcset="{{ image_desktop_first | img_url: '619x' }} 1x, {{ image_desktop_first | img_url: '1238x' }} 2x"
+                      srcset="{{ image_desktop_first | img_url: '635x' }} 1x, {{ image_desktop_first | img_url: '1270x' }} 2x"
                       media="(max-width: 991px)"
-                      width="619"
+                      width="635"
                       height="330"
                 />
 
                 <img
                       class="grid-images__image"
-                      srcset="{{ image_desktop_first | img_url: "1200x" }} 1x, {{ image_desktop_first | img_url: "2400x" }} 2x"
-                      src="{{- image_desktop_first | img_url: "10x" -}}"
+                      srcset="{{ image_desktop_first | img_url: "1230x" }} 1x, {{ image_desktop_first | img_url: "2460x" }} 2x"
+                      src="{{- image_desktop_first | img_url: "1230x" -}}"
                       alt="{{- image_desktop_first.alt | escape -}}"
-                      width="1200"
+                      width="1230"
                       height="640"
                       loading="eager"
                 />
@@ -345,7 +345,7 @@
               />
 
               <source
-                   srcset="{{ image_desktop_second | img_url: '372x' }} 1x, {{ image_desktop_second | img_url: '744x' }} 2x"
+                   srcset="{{ image_desktop_second | img_url: '355x' }} 1x, {{ image_desktop_second | img_url: '710x' }} 2x"
                    media="(max-width: 991px)"
                    width="372"
                    height="330"
@@ -353,10 +353,10 @@
 
               <img
                     class="grid-images__image"
-                    srcset="{{ image_desktop_second | img_url: "720x" }} 1x, {{ image_desktop_second | img_url: "1440x" }} 2x"
+                    srcset="{{ image_desktop_second | img_url: "685x" }} 1x, {{ image_desktop_second | img_url: "1370x" }} 2x"
                     src="{{- image_desktop_second | img_url: "10x" -}}"
                     alt="{{- image_desktop_second.alt | escape -}}"
-                    width="720"
+                    width="685"
                     height="640"
                     loading="eager"
               />
@@ -370,18 +370,12 @@
         {% endif %}
         </div>
         {%- else -%}
-          {% assign odd =  forloop.index | modulo: 2 %}
-
           <div
                   class="grid-images__col grid-images__col--big"
                   style="{{- styles_first -}}"
           >
             <div class="grid-images__image-container">
-              {%- if odd  == 1 -%}
-                {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- else -%}
                 {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- endif -%}
 
               {{- grid_images_info_first -}}
             </div>
@@ -392,11 +386,7 @@
                  style="{{- styles_second -}}"
           >
             <div class="grid-images__image-container">
-                {%- if odd  == 1 -%}
-                    {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
-                {%- else -%}
-                    {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
-                {%- endif -%}
+                {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
 
                 {{- grid_images_info_second -}}
             </div>
@@ -446,18 +436,18 @@
                 />
 
                 <source
-                        srcset="{{ image_desktop_first | img_url: '619x' }} 1x, {{ image_desktop_first | img_url: '1238x' }} 2x"
+                        srcset="{{ image_desktop_first | img_url: '355x' }} 1x, {{ image_desktop_first | img_url: '710x' }} 2x"
                         media="(max-width: 991px)"
-                        width="619"
+                        width="355"
                         height="330"
                 />
 
                 <img
                         class="grid-images__image"
-                        srcset="{{ image_desktop_first | img_url: "1200x" }} 1x, {{ image_desktop_first | img_url: "2400x" }} 2x"
+                        srcset="{{ image_desktop_first | img_url: "685x" }} 1x, {{ image_desktop_first | img_url: "1370x" }} 2x"
                         src="{{- image_desktop_first | img_url: "10x" -}}"
                         alt="{{- image_desktop_first.alt | escape -}}"
-                        width="1200"
+                        width="685"
                         height="640"
                         loading="eager"
                 />
@@ -513,17 +503,17 @@
                />
 
                <source
-                       srcset="{{ image_desktop_second | img_url: '372x' }} 1x, {{ image_desktop_second | img_url: '744x' }} 2x"
+                       srcset="{{ image_desktop_second | img_url: '635x' }} 1x, {{ image_desktop_second | img_url: '1270x' }} 2x"
                        media="(max-width: 991px)"
-                       width="372"
+                       width="635"
                        height="330"
                />
 
                <img class="grid-images__image"
-                    srcset="{{ image_desktop_second | img_url: "720x" }} 1x, {{ image_desktop_second | img_url: "1440x" }} 2x"
-                    src="{{- image_desktop_second | img_url: "10x" -}}"
+                    srcset="{{ image_desktop_second | img_url: "1230x" }} 1x, {{ image_desktop_second | img_url: "2460x" }} 2x"
+                    src="{{- image_desktop_second | img_url: "1230x" -}}"
                     alt="{{- image_desktop_second.alt | escape -}}"
-                    width="720"
+                    width="1230"
                     height="640"
                     loading="eager"
                />
@@ -543,11 +533,7 @@
              style="{{- styles_second -}}"
         >
           <div class="grid-images__image-container">
-            {%- if odd  == 1 -%}
-              {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
-            {%- else -%}
               {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
-            {%- endif -%}
 
             {{- grid_images_info_second -}}
           </div>
@@ -557,11 +543,7 @@
             style="{{- styles_second -}}"
         >
           <div class="grid-images__image-container">
-              {%- if odd  == 1 -%}
-                  {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- else -%}
-                  {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- endif -%}
+              {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
 
               {{- grid_images_info_second -}}
           </div>
@@ -705,17 +687,11 @@
 
         </div>
         {%- else -%}
-          {% assign odd =  forloop.index | modulo: 2 %}
-
           <div class="grid-images__col grid-images__col--equal"
                style="{{- styles_first -}}"
           >
             <div class="grid-images__image-container">
-              {%- if odd  == 1 -%}
-                {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- else -%}
                 {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- endif -%}
 
               {{- grid_images_info_first -}}
             </div>
@@ -725,11 +701,7 @@
             style="{{- styles_second -}}"
           >
             <div class="grid-images__image-container">
-              {%- if odd  == 1 -%}
-                  {{- "lifestyle-1" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- else -%}
-                  {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
-              {%- endif -%}
+                {{- "lifestyle-2" | placeholder_svg_tag: "grid-images__image" -}}
 
               {{- grid_images_info_second -}}
             </div>
